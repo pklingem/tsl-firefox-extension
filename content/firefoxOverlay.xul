@@ -40,6 +40,9 @@
 <overlay id="tsl-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="overlay.js"/>
+  <script src="tsl.js"/>
+  <script src="prototype.js"/>
+  <script src="effects.js"/>
   <stringbundleset id="stringbundleset">
     <stringbundle id="tsl-strings" src="chrome://tsl/locale/tsl.properties"/>
   </stringbundleset>

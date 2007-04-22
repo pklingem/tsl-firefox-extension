@@ -33,10 +33,11 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  * 
  * ***** END LICENSE BLOCK ***** */
-
+/*
 var tsl = {
   onLoad: function() {
     // initialization code
+    alert("hello");
     this.initialized = true;
     this.strings = document.getElementById("tsl-strings");
   },
@@ -49,3 +50,29 @@ var tsl = {
 
 };
 window.addEventListener("load", function(e) { tsl.onLoad(e); }, false);
+*/
+
+
+
+window.addEventListener("load", function() { tsl.init(); }, false);
+
+var tsl = {
+  init: function() {
+    var appcontent = document.getElementById("appcontent");   // browser
+    if(appcontent)
+      appcontent.addEventListener("load", this.onPageLoad, true);
+  },
+
+  onPageLoad: function(aEvent) {
+    var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
+    
+    if (doc.location.host == "www.techsideline.com") {
+    	main(doc);
+    }
+    // do something with the loaded page.
+    // doc.location is a Location object (see below for a link).
+    // You can use it to make your code executed on certain pages only.
+    if(doc.location.href.search("forum") > -1)
+      alert("a forum page is loaded");
+  }
+}
