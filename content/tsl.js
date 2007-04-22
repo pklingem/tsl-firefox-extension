@@ -170,41 +170,47 @@ function loadMessage(event) {
 
 				postTable.appendChild(trElement);
 
+				var httpRequest;
+				httpRequest = new XMLHttpRequest();
+				if (httpRequest.overrideMimeType) {
+					httpRequest.overrideMimeType('text/xml');
+				}
+				httpRequest.onreadystatechange = function() { alertContents(httpRequest, currentTable, messageTableElement, postTable); };
+				httpRequest.open('GET', linkURL, true);
+				httpRequest.send(null);
+			}
+		} catch (e) {
+			alert("Exception: " + e);
+		}
+		event.preventDefault();
+	}	
+}
 
+function alertContents(httpRequest, currentTable, messageTableElement, postTable) {
 
-				GM_xmlhttpRequest({
-					method: 'GET',
-					url: linkURL,
-					headers: {
-						'User-agent': 'Mozilla/4.0',
-						'Accept': 'text/html',
-					},
-					onload: function(responseDetails) {
-						while (responseDetails.readyState != 4);
-						if (responseDetails.status == 200) {
-
-							try {
+	if (httpRequest.readyState == 4) {
+		if (httpRequest.status == 200) {
 								var txt2;
-								var txt = responseDetails.responseText;
+								var txt = httpRequest.responseText;
 								txt = txt.substr(txt.indexOf('<table width=600 border=0>'))
 								txt = txt.substr(0, txt.indexOf('</table>')+8);
 								txt = txt.substr(txt.indexOf('<b>Message:</b>')+33);
 								txt2 = txt.substr(txt.indexOf('</tr>')+5);
 								txt2 = txt2.substr(0, txt2.indexOf('</table>'));
 								txt = txt.substr(0, txt.indexOf('<p>'));
-
-								messageTrElement = tsldoc.createElement("tr");
-								messageTdElement = tsldoc.createElement("td");
-
+	
+								var messageTrElement = tsldoc.createElement("tr");
+								var messageTdElement = tsldoc.createElement("td");
+	
 								var messageFontElement = tsldoc.createElement("font");
 								messageFontElement.setAttribute("face", "arial,helvetica");
 								messageFontElement.setAttribute("size", "-1");
 								messageFontElement.setAttribute("color", "ff6600");
-
+	
 								messageFontElement.innerHTML = txt;
-
+	
 								messageTdElement.appendChild(messageFontElement);
-
+	
 								if(txt2.indexOf('<!--REPLACE_WEB_LINK_BLOCK-->') == -1) {
 									var webLinkTr = tsldoc.createElement("tr");
 									var webLinkTd = tsldoc.createElement("td");
@@ -231,28 +237,13 @@ function loadMessage(event) {
 									imgLinkTr.appendChild(imgLinkTd);
 									messageTdElement.appendChild(imgLinkTr);
 								}
-
+	
 								messageTrElement.appendChild(messageTdElement);
 								messageTableElement.appendChild(messageTrElement);
 								currentTable.parentNode.insertBefore(postTable, currentTable.nextSibling);
-
-							} catch (e) {
-								GM_log("Exception: " + e);
-							}
-						} //end if
-
-					} //end function
-				});
-			}
-		} catch (e) {
-			GM_log("Exception: " + e);
+		} else {
+		alert('There was a problem with the request.');
 		}
-		event.preventDefault();
-	}	
+	}
+
 }
-
-
-//TODO:
-//	1.	Fix bug with bold message topics
-//	3.	Load more topics
-//	4.  Figure out an auto refresh scheme that doesn't require reloading the page
