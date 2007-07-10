@@ -1,4 +1,0 @@
-content	tsl	content/
-locale	tsl	en-US	locale/en-US/
-skin	tsl	classic/1.0	skin/
-overlay	chrome://browser/content/browser.xul	chrome://tsl/content/firefoxOverlay.xul
