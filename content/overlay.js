@@ -33,46 +33,90 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  * 
  * ***** END LICENSE BLOCK ***** */
-/*
-var tsl = {
-  onLoad: function() {
-    // initialization code
-    alert("hello");
-    this.initialized = true;
-    this.strings = document.getElementById("tsl-strings");
-  },
-  onMenuItemCommand: function(e) {
-    var promptService = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                                  .getService(Components.interfaces.nsIPromptService);
-    promptService.alert(window, this.strings.getString("helloMessageTitle"),
-                                this.strings.getString("helloMessage"));
-  },
-
-};
-window.addEventListener("load", function(e) { tsl.onLoad(e); }, false);
-*/
-
-
 
 window.addEventListener("load", function() { tsl.init(); }, false);
 
 var tsl = {
-  init: function() {
-    var appcontent = document.getElementById("appcontent");   // browser
-    if(appcontent)
-      appcontent.addEventListener("load", this.onPageLoad, true);
-  },
+    init: function() {
+        var appcontent = document.getElementById("appcontent");   // browser
+        if(appcontent)
+            appcontent.addEventListener("load", this.onPageLoad, true);
+    },
 
-  onPageLoad: function(aEvent) {
-    var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
+    onPageLoad: function(aEvent) {
+        var targetURLs = new Array();
+        targetURLs['http://www.techsideline.com/message_board/tslpass_subscribers/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/tslpass_subscribers/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/tslpass_subscribers/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/tslpass_recruiting/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/tslpass_recruiting/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/tslpass_recruiting/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/tslpass_tickets/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/tslpass_tickets/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/tslpass_tickets/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/football/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/football/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/football/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/basketball/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/basketball/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/basketball/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/womensbb/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/womensbb/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/womensbb/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/olympic/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/olympic/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/olympic/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/tickets/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/tickets/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/tickets/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/studenttix/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/studenttix/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/studenttix/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/coverage/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/coverage/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/coverage/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/america/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/america/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/america/search.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/score/'] = true;
+        targetURLs['http://www.techsideline.com/message_board/score/post.php'] = false;
+        targetURLs['http://www.techsideline.com/message_board/score/search.php'] = false;
+
+        var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
+        var url = doc.location.href;
+
+try {
+
+        if (targetURLs[url]) {
+			//insert javascripts and stylesheets to the page
+			tsl.insertStyleSheet(doc, 'chrome://tsl/skin/overlay.css');
+			tsl.insertJavaScript(doc, 'chrome://tsl/content/login.js');
+			tsl.insertJavaScript(doc, 'chrome://tsl/content/message.js');
+			tsl.insertJavaScript(doc, 'chrome://tsl/content/modify_mb.js');
+			tsl.insertJavaScript(doc, 'chrome://tsl/content/effects.js');
+        }
+
+} catch (e) {
+	alert(e);
+}
+    },
+
+    insertJavaScript: function(doc, scriptURL) {
+    	scriptElement = doc.createElement('SCRIPT');
+		scriptElement.setAttribute('LANGUAGE', 'JavaScript');
+		scriptElement.setAttribute('type', 'text/javascript');
+		scriptElement.setAttribute('src', scriptURL);
+		doc.body.appendChild(scriptElement);
+    },
     
-    if (doc.location.host == "www.techsideline.com") {
-    	main(doc);
-    }
-    // do something with the loaded page.
-    // doc.location is a Location object (see below for a link).
-    // You can use it to make your code executed on certain pages only.
-    if(doc.location.href.search("forum") > -1)
-      alert("a forum page is loaded");
-  }
+
+	insertStyleSheet: function(doc, styleSheetURL) {
+		//load stylesheet
+		var link = doc.createElement("link");
+		link.rel = "stylesheet";
+		link.type = "text/css";
+		link.href = styleSheetURL; 
+		doc.getElementsByTagName('head')[0].appendChild(link);	
+	}
+
 }

@@ -39,16 +39,11 @@
 <!DOCTYPE overlay SYSTEM "chrome://tsl/locale/tsl.dtd">
 <overlay id="tsl-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="overlay.js"/>
-  <script src="tsl.js"/>
-  <script src="prototype.js"/>
-  <script src="effects.js"/>
+  <script src="overlay.js" type="text/javascript" />
+  <script src="tsl3.js" type="text/javascript" />
+  <script src="prototype.js" type="text/javascript" />
+  <script src="effects.js" type="text/javascript" />
   <stringbundleset id="stringbundleset">
     <stringbundle id="tsl-strings" src="chrome://tsl/locale/tsl.properties"/>
   </stringbundleset>
-
-  <menupopup id="menu_ToolsPopup">
-    <menuitem id="tsl-hello" label="&tsl.label;" 
-              oncommand="tsl.onMenuItemCommand(event);"/>
-  </menupopup>
 </overlay>
