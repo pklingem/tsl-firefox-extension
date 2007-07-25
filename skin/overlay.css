@@ -54,3 +54,7 @@ div.row input {
     width: 360px;
     margin: 0px auto;
 }
+
+.replies {
+    font-weight: bold;
+}

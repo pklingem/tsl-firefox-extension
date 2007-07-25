@@ -34,13 +34,20 @@ function tslMain() {
         divRoot = document.createElement("div");
         divRoot.setAttribute("level", 0);
         divRoot.setAttribute("class", "root");
+//
+font = document.createElement("font");
+font.style.display = "none";
+font.appendChild(document.createElement("font")).innerHTML = 0;
+font.appendChild(document.createElement("font"));
+divRoot.appendChild(font);
+// 
         currentTable.parentNode.insertBefore(divRoot, currentTable);
 
 		//main function call to reorganize the threads into a heirarchical structure
-		traverseTablesLoop(divRoot);
+		traverseTables(divRoot);
 
 		//unhide the reordered threads
-		divRoot.firstChild.style.display = "block";
+		divRoot.lastChild.style.display = "block";
 	} catch (e) {
 		alert("Exception in TSL Extension function tslMain: " + e);
 	}
@@ -67,6 +74,37 @@ function traverseTablesLoop(currentDiv) {
 
 	} catch (e) {
 		alert("Exception in TSL Extension function traverseTablesLoop: " + e);
+	}
+}
+
+function traverseTables(currentDiv) {
+	try {		
+		if (divRoot.nextSibling.tagName != 'TABLE') return;
+		var nextDiv = replaceTableWithDiv(divRoot.nextSibling);
+
+    	if ( parseInt(currentDiv.getAttribute("level")) < parseInt(nextDiv.getAttribute("level")) ) {
+			traverseTables(formatSubPost(currentDiv, nextDiv));
+//
+    		parentRepliesFont = currentDiv.lastChild.lastChild.previousSibling;
+    		childRepliesFont = nextDiv.lastChild.lastChild.previousSibling;
+    		parentRepliesFont.innerHTML = parseInt(parentRepliesFont.innerHTML) + parseInt(childRepliesFont.innerHTML);
+//
+    		return; 
+    	} else if ( parseInt(currentDiv.getAttribute("level")) == parseInt(nextDiv.getAttribute("level")) ) {
+    		traverseTables(formatSiblingPost(currentDiv, nextDiv));
+//
+    		repliesFont = currentDiv.parentNode.parentNode.lastChild.lastChild.previousSibling;
+    		repliesFont.innerHTML = parseInt(repliesFont.innerHTML)+1;
+//
+			return;
+    	} else {
+			parentDiv = traverseTables(formatAncestorPost(currentDiv, nextDiv));
+    		repliesFont = parentDiv.parentNode.parentNode.lastChild.lastChild.previousSibling;
+    		repliesFont.innerHTML = parseInt(repliesFont.innerHTML)+1;
+			return;
+    	}
+	} catch (e) {
+		alert("Exception in TSL Extension function traverseTables: " + e);
 	}
 }
 
@@ -100,6 +138,12 @@ function replaceTableWithDiv(table) {
 		div.getElementsByTagName("a")[0].addEventListener("click", function (event) { fetchMessage(event); }, true);
 		if (parseInt(div.getAttribute("level")) > 0)
 			div.setAttribute("class", "post");
+//
+repliesDiv = document.createElement("font");
+repliesDiv.setAttribute("class", "replies");
+repliesDiv.innerHTML = 0;
+div.lastChild.insertBefore(repliesDiv, div.lastChild.lastChild);
+//
 		table.parentNode.replaceChild(div, table);
 		return div;
 	} catch (e) {
@@ -113,7 +157,6 @@ function formatSubPost(current, next) {
 		var subPostContainerDiv = next.cloneNode(false);
 		subPostContainerDiv.style.display = "none";
 		subPostContainerDiv.appendChild(next);
-	//	current.setAttribute("replies", parseInt(current.getAttribute("replies"))+1);
 		current.appendChild(subPostContainerDiv);
 		return next;
 	} catch (e) {
@@ -127,7 +170,6 @@ function formatSiblingPost(current, next) {
 		var subPostContainerDiv = document.createElement("div");
 		current.appendChild(subPostContainerDiv).setAttribute("level", parseInt(current.getAttribute("level"))+1);
 		subPostContainerDiv.setAttribute("class", "post");
-	//	current.parentNode.parentNode.setAttribute("replies", parseInt(current.parentNode.parentNode.getAttribute("replies"))+1);
 		return current.parentNode.appendChild(next);
 	} catch (e) {
 		alert("Exception in TSL Extension function formatSiblingPost: " + e);
@@ -143,11 +185,6 @@ function formatAncestorPost(current, next) {
 	    var parentDiv = current.parentNode;
 	    var levelDifference = current.getAttribute("level") - next.getAttribute("level");
 	    for (i=0; i<levelDifference; i++) parentDiv = parentDiv.parentNode.parentNode;
-	//	parent.parentNode.setAttribute("replies", parseInt(parent.parentNode.parentNode.getAttribute("replies"))+1);
-
-//	var div = document.createElement("div");
-//	div.setAttribute("level", parseInt(next.getAttribute("level"))+1);
-//	next.appendChild(div);
 
 		return parentDiv.appendChild(next);
 	} catch (e) {
