@@ -1,4 +1,6 @@
-content	tsl	content/
+content	tsl	content/	contentaccessible=yes
 locale	tsl	en-US	locale/en-US/
-skin	tsl	classic/1.0	skin/
+skin	tsl	classic/1.0	skin/	contentaccessible=yes
 overlay	chrome://browser/content/browser.xul	chrome://tsl/content/firefoxOverlay.xul
+overlay chrome://tsl/skin/overlay.css
+

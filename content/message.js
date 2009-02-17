@@ -11,7 +11,7 @@ function displayMessageForm(element) {
 			messageDiv.setAttribute("messageForm", "true");
 		}
 	} catch (e) {
-		alert("Exception in TSL Extension function displayMessageForm: " + e);
+		console.log("Exception in TSL Extension function displayMessageForm: " + e);
 	}
 }
 
@@ -103,7 +103,7 @@ function submitMessage(form) {
 		httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		httpRequest.send(postData);	
 	} catch (e) {
-		alert("Exception in TSL Extension function loginRequest: " + e);
+		console.log("Exception in TSL Extension function loginRequest: " + e);
 	}	
 }
 
@@ -111,11 +111,11 @@ function messageSubmitStatus(httpRequest, form) {
 	try {
 		if (httpRequest.readyState == 4) {
 			if (httpRequest.status == 200) {
-				alert("success");
+				console.log("success");
 			}
 		}
 	} catch (e) {
-		alert("Exception in TSL Extension function loginRequest: " + e);
+		console.log("Exception in TSL Extension function loginRequest: " + e);
 	}	
 	
 }
@@ -150,7 +150,7 @@ function fetchMessage(event) {
 		}
 		event.preventDefault();
 	} catch (e) {
-		alert("Exception in TSL Extension function fetchMessage: " + e);
+		console.log("Exception in TSL Extension function fetchMessage: " + e);
 	}
 }
 
@@ -212,11 +212,11 @@ function displayMessage(httpRequest, currentDiv, linkURL) {
 				lastDisplayedMessage = messageDiv;
 				
 			} else {
-				alert('There was a problem with the request.');
+				console.log('There was a problem with the request.');
 			}
 		}
 	} catch (e) {
-		alert("Exception in TSL Extension function displayMessage: " + e);
+		console.log("Exception in TSL Extension function displayMessage: " + e);
 	}
 }
 
@@ -255,6 +255,6 @@ function toggleCollapse(event) {
 		else
 			subPostContainer.style.display = "none";		
 	} catch (e) {
-		alert("Exception in TSL Extension function toggleCollapse: " + e);
+		console.log("Exception in TSL Extension function toggleCollapse: " + e);
 	}
 }

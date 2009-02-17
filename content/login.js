@@ -3,7 +3,7 @@ function modifyLogin(table) {
 		links = table.getElementsByTagName("a");
 		links[0].addEventListener("click", function (event) { displayLogin(event); }, true);
 	} catch (e) {
-		alert("Exception in TSL Extension function modifyLogin: " + e);
+		console.log("Exception in TSL Extension function modifyLogin: " + e);
 	}
 }
 
@@ -29,7 +29,7 @@ function displayLogin(event) {
 		}
 		event.preventDefault();
 	} catch (e) {
-		alert("Exception in TSL Extension function displayLogin: " + e);
+		console.log("Exception in TSL Extension function displayLogin: " + e);
 	}
 }
 
@@ -54,7 +54,7 @@ function loginRequest(form) {
 		httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		httpRequest.send(postData);	
 	} catch (e) {
-		alert("Exception in TSL Extension function loginRequest: " + e);
+		console.log("Exception in TSL Extension function loginRequest: " + e);
 	}
 }
 
@@ -71,7 +71,7 @@ function login(httpRequest, form) {
 
 				//www.iloveuglyhacks.com
 				if (responseDoc.getElementsByTagName("form")[0]) {
-					alert("bad password");
+					console.log("bad password");
 				} else {
 					//success
 					var username = form.firstChild.nextSibling.value;
@@ -85,10 +85,10 @@ function login(httpRequest, form) {
 				}
 
 			} else {
-				alert('There was a problem with the request.');
+				console.log('There was a problem with the request.');
 			}
 		}
 	} catch (e) {
-		alert("Exception in TSL Extension function login: " + e);
+		console.log("Exception in TSL Extension function login: " + e);
 	}
 }

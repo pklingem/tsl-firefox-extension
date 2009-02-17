@@ -49,7 +49,7 @@ divRoot.appendChild(font);
 		//unhide the reordered threads
 		divRoot.lastChild.style.display = "block";
 	} catch (e) {
-		alert("Exception in TSL Extension function tslMain: " + e);
+		console.log("Exception in TSL Extension function tslMain: " + e);
 	}
 }
 
@@ -73,7 +73,7 @@ function traverseTablesLoop(currentDiv) {
 		toChicagoMaroon(currentDiv);
 
 	} catch (e) {
-		alert("Exception in TSL Extension function traverseTablesLoop: " + e);
+		console.log("Exception in TSL Extension function traverseTablesLoop: " + e);
 	}
 }
 
@@ -104,7 +104,7 @@ function traverseTables(currentDiv) {
 			return;
     	}
 	} catch (e) {
-		alert("Exception in TSL Extension function traverseTables: " + e);
+		console.log("Exception in TSL Extension function traverseTables: " + e);
 	}
 }
 
@@ -126,7 +126,7 @@ function getLevel(tableElement) {
 		textObject.data = "";
 		return len;
 	} catch (e) {
-		alert("Exception in TSL Extension function getLevel: " + e);
+		console.log("Exception in TSL Extension function getLevel: " + e);
 	}
 }
 
@@ -147,7 +147,7 @@ div.lastChild.insertBefore(repliesDiv, div.lastChild.lastChild);
 		table.parentNode.replaceChild(div, table);
 		return div;
 	} catch (e) {
-		alert("Exception in TSL Extension function replaceTableWithDiv: " + e);
+		console.log("Exception in TSL Extension function replaceTableWithDiv: " + e);
 	}
 }
 
@@ -160,7 +160,7 @@ function formatSubPost(current, next) {
 		current.appendChild(subPostContainerDiv);
 		return next;
 	} catch (e) {
-		alert("Exception in TSL Extension function formatSubPost: " + e);
+		console.log("Exception in TSL Extension function formatSubPost: " + e);
 	}
 }
 
@@ -172,7 +172,7 @@ function formatSiblingPost(current, next) {
 		subPostContainerDiv.setAttribute("class", "post");
 		return current.parentNode.appendChild(next);
 	} catch (e) {
-		alert("Exception in TSL Extension function formatSiblingPost: " + e);
+		console.log("Exception in TSL Extension function formatSiblingPost: " + e);
 	}
 }
 
@@ -188,7 +188,7 @@ function formatAncestorPost(current, next) {
 
 		return parentDiv.appendChild(next);
 	} catch (e) {
-		alert("Exception in TSL Extension function formatAncestorPost: " + e);
+		console.log("Exception in TSL Extension function formatAncestorPost: " + e);
 	}
 }
 
@@ -197,7 +197,7 @@ function toChicagoMaroon(div) {
 		image = div.getElementsByTagName("img")[0];
 		if (null != image) image.setAttribute("src", image.getAttribute("src").replace(/1/,"0"));
 	} catch (e) {
-		alert("Exception in TSL Extension function toChicagoMaroon: " + e);
+		console.log("Exception in TSL Extension function toChicagoMaroon: " + e);
 	}
 }
 
@@ -209,6 +209,6 @@ function toBurntOrange(div) {
 			image.addEventListener("click", function (event) { toggleCollapse(event); }, true);
 		}
 	} catch (e) {
-		alert("Exception in TSL Extension function toBurntOrange: " + e);
+		console.log("Exception in TSL Extension function toBurntOrange: " + e);
 	}
 }
